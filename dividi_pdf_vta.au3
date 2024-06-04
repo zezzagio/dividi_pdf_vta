@@ -7,38 +7,49 @@
 #include <StringConstants.au3>
 #include <File.au3>
 
+Global $ini_file = StringFormat("%s\%s.ini", @ScriptDir, @ScriptName)
+Global $nome_script = "genera_pdf.bat"
+Global $dir_lavoro
+Global $nome_file_batch
+
 main()
 
 Func main()
 	; Create a constant variable in Local scope of the message to display in FileOpenDialog.
 	Local Const $sMessage = "Seleziona il pdf VTA da dividere."
-    Local $dir_lavoro = @WorkingDir
 	; Display an open dialog to select a list of file(s).
     Local $sFileOpenDialog = FileOpenDialog($sMessage, @WindowsDir & "\", "Documenti pdf (*.pdf)|Tutti (*.*)", $FD_FILEMUSTEXIST)
-    
+
 	If @error Then
 		; Display the error message.
 		MsgBox($MB_SYSTEMMODAL, "", "Nessun file selezionato.")
 
 		; Change the working directory (@WorkingDir) back to the location of the script directory as FileOpenDialog sets it to the last accessed folder.
+		FileChangeDir(@WorkinDir)
+     Else
+        Local $sDrive, $sDir, $sFileName, $sExtension
+        $percorsi = _PathSplit($sFileOpenDialog, $sDrive, $sDir, $sFileName, $sExtension)
+        
+        $dir_lavoro = _PathMake($sDrive, $sDir, "", "")
+        
+        $nome_file_batch = StringFormat("%s\%s", $dir_lavoro, $nome_script)
+        
 		FileChangeDir($dir_lavoro)
-	Else
+        
 		; Change the working directory (@WorkingDir) back to the location of the script directory as FileOpenDialog sets it to the last accessed folder.
-		FileChangeDir($dir_lavoro)
 
 		; Replace instances of "|" with @CRLF in the string returned by FileOpenDialog.
-		$sFileOpenDialog = StringReplace($sFileOpenDialog, "|", @CRLF)
-
-		; Display the list of selected files.
-		
+        ;$sFileOpenDialog = StringReplace($sFileOpenDialog, "|", @CRLF)
+        
         dividi($sFileOpenDialog)
-        RunWait(@WorkingDir & "\genera_pdf.bat")
+        RunWait($nome_file_batch)
 	EndIf
 EndFunc
 
 Func dividi($file)
+    FileChangeDir($dir_lavoro)
     ;log_window()
-    $pdf2text = IniRead( @ScriptDir & "\" & @ScriptName & ".ini", "programmi", "pdftotext", "" )
+    $pdf2text = IniRead($ini_file, "programmi", "pdftotext", "" )
     $text_file = StringFormat("%s.txt", $file)
     $comando = StringFormat('"%s" -layout "%s" "%s"', $pdf2text, $file, $text_file)
 	$esito = RunWait($comando)
@@ -52,8 +63,8 @@ Func dividi($file)
 EndFunc
 
 Func leggi_file($file)
+    FileChangeDir($dir_lavoro)
     Local $hLeggi = FileOpen($file, $FO_READ)
-    Local $nome_file_batch = @WorkingDir & "\genera_pdf.bat"
     Local $hScrivi = FileOpen($nome_file_batch, $FO_OVERWRITE)
     Local $da_pag = 1
     Local $a_pag = 1
@@ -63,7 +74,7 @@ Func leggi_file($file)
     Local $data
     Local $pdf_rel
     Local $sDrive, $sDir, $sFileName, $sExtension 
-    Local $qpdf = IniRead( @ScriptDir & "\" & @ScriptName & ".ini", "programmi", "qpdf", "" )
+    Local $qpdf = IniRead($ini_file, "programmi", "qpdf", "" )
     $percorsi = _PathSplit($file, $sDrive, $sDir, $sFileName, $sExtension)
     $pdf_rel = $percorsi[$PATH_FILENAME]
     If $hLeggi = -1 Then
@@ -96,7 +107,6 @@ Func leggi_file($file)
     Wend
     stampa_comando($hScrivi, $qpdf, $albero, $data, $da_pag, 'z', $pdf_rel)
     FileClose($hLeggi)
-    FileWrite($hScrivi, @WorkingDir)
     FileClose($hScrivi)
 EndFunc
 
