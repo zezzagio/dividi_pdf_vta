@@ -29,7 +29,7 @@ suddividere, poi fa le sue cose; i file pdf separati vengono
 (dovrebbero venire) generati nella stessa cartella del pdf originale.
 
 La convenzione per il nome del file che ho seguito è:
-<numero albero>_<AAAA-MM-GG>_strumentale.pdf
+&lt;numero albero&gt;_&lt;AAAA-MM-GG&gt;_strumentale.pdf
 (per altre tipologia si vedrà in seguito.)
 
 Controlla che le suddivisioni siano corrette; il numero dell'albero
@@ -49,7 +49,7 @@ si possa); la scrittura con il trattino è poi anche una specie di
 standard.
 
 Il programma genera due file, nella stessa cartella del pdf originale:
-un "<nome documento>.txt" che contiene (sperabilmente) tutto il testo
+un "&lt;nome documento&gt;.txt" che contiene (sperabilmente) tutto il testo
 del pdf originale; e un "genera_pdf.bat" con i comandi di qpdf per
 generare i vari pdf separati. Una volta fatto il lavoro, puoi
 tranquillamente cancellarli.
