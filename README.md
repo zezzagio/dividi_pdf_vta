@@ -53,6 +53,3 @@ un "<nome documento>.txt" che contiene (sperabilmente) tutto il testo
 del pdf originale; e un "genera_pdf.bat" con i comandi di qpdf per
 generare i vari pdf separati. Una volta fatto il lavoro, puoi
 tranquillamente cancellarli.
-
-Non ho verificato che funzioni anche direttamente su file sul server;
-può darsi che sia necessario copiarli sul tuo computer.
