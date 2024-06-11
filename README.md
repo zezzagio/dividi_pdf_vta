@@ -1,4 +1,5 @@
-Qualcosa ho fatto; se possa essere adeguato non lo so.
+Divide il pdf delle vta (vsa), così come attualmente prodotto da
+Greenspace, producendo un pdf per ogni albero.
 
 Si appoggia su due utilità, che devi installare separatamente:
 
@@ -16,12 +17,12 @@ istruzioni. Alla domanda se aggiungere o no il programma alla path
 puoi rispondere quello che vuoi; non ho fatto alcuna assunzione al
 riguardo.
 
-I due file che allego puoi copiarli dove più ti fa comodo. Apri con un
-editor di testo (Notepad o altro) il file dividi_pdf_vta.exe.ini, e
-controlla che i percorsi dei due programmi corrispondano a dove li hai
-installati (per qpdf dovrebbe già andare bene, se hai lasciato le
-opzioni default; per pdftotext sarà da aggiustare, secondo dove hai
-copiato i file.)
+I due file ("dividi_pdf_vta.exe" e "dividi_pdf_vta.exe.ini") puoi
+copiarli dove più ti fa comodo. Apri con un editor di testo (Notepad o
+altro) il file dividi_pdf_vta.exe.ini, e controlla che i percorsi dei
+due programmi corrispondano a dove li hai installati (per qpdf
+dovrebbe già andare bene, se hai lasciato le opzioni default; per
+pdftotext sarà da aggiustare, secondo dove hai copiato i file.)
 
 All'esecuzione di dividi_pdf_vta.exe (creati magari un link sul
 desktop per avviarlo) ti chiederà di indicargli il file pdf da
