@@ -44,7 +44,8 @@ abbastanza fragili, per forza di cose; essendo file generati da un
 programma, comunque, ci sono buone probabilità che la struttura sia
 sempre quella e che vada tutto bene. Finché non va male, almeno.
 
-Nel nome del pdf ho messo dei trattini nella data, perché la barra è
+Nel nome del pdf ho messo dei trattini nella data (in luogo della
+barra, come mi si chiedeva), perché la barra, anche in Windows, non è
 un bel carattere da mettere nel nome di un file (credo che proprio non
 si possa); la scrittura con il trattino è poi anche una specie di
 standard.
