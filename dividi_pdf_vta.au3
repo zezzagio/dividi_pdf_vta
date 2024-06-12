@@ -25,7 +25,7 @@ Func main()
 		MsgBox($MB_SYSTEMMODAL, "", "Nessun file selezionato.")
 
 		; Change the working directory (@WorkingDir) back to the location of the script directory as FileOpenDialog sets it to the last accessed folder.
-		FileChangeDir(@WorkinDir)
+		FileChangeDir(@WorkingDir)
      Else
         Local $sDrive, $sDir, $sFileName, $sExtension
         $percorsi = _PathSplit($sFileOpenDialog, $sDrive, $sDir, $sFileName, $sExtension)
