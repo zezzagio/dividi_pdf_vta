@@ -42,7 +42,10 @@ Func main()
         ;$sFileOpenDialog = StringReplace($sFileOpenDialog, "|", @CRLF)
         
         dividi($sFileOpenDialog)
-        RunWait($nome_file_batch)
+        $esegui = MsgBox($MB_SYSTEMMODAL + $MB_YESNO, "Dividi pdf VSA", "Vuoi procedere alla suddivisione del pdf? i pdf risultanti verrano generati nella stessa cartella dell'originale")
+        If $esegui = $IDYES Then
+           RunWait($nome_file_batch)
+        EndIf
 	EndIf
 EndFunc
 
