@@ -1,3 +1,4 @@
 *.au3 eol=crlf
+*.ahk eol=crlf
 *.bat eol=crlf
 *.ini eol=crlf
