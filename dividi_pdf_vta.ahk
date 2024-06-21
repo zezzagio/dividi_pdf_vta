@@ -8,6 +8,9 @@ MyGui := Gui("+Resize", "Untitled")  ; Make the window resizable.
 FileMenu := Menu()
 FileMenu.Add("&Apri", MenuFileOpen)
 FileMenu.Add() ; Separator line.
+;FileMenu.Add("&Save", MenuFileSave)
+FileMenu.Add("&Salva come", MenuFileSaveAs)
+FileMenu.Add() ; Separator line.
 FileMenu.Add("E&xit", MenuFileExit)
 HelpMenu := Menu()
 HelpMenu.Add("&About", MenuHelpAbout)
@@ -52,7 +55,13 @@ MenuFileOpen(*)
     
     If esito = 0 {
         nome_file_batch := Format("{1:s}\{2:s}", OutDir, "genera_pdf.bat")
-        leggi_file(text_file, nome_file_batch)
+        esito := leggi_file(text_file, nome_file_batch)
+        if not esito = 0
+        {
+            GuiEditAppend(MainEdit, "`r`n-- SI SONO VERIFICATI DEI PROBLEMI --")
+            GuiEditAppend(MainEdit, "-- DIVISIONE NON ESEGUITA --`r`n")
+            return
+        }
         GuiEditAppend(MainEdit, "-- FINE LETTURA - FILE COMANDI GENERATO --`r`n")
         risposta := MsgBox("Vuoi procedere alla suddivisione del pdf? i pdf risultanti verrano generati nella stessa cartella dell'originale",
                             "Dividi pdf VSA",
@@ -77,10 +86,14 @@ leggi_file(nome_file, nome_file_batch)
     result := unset
     data := unset
     albero := ""
+    esito := 0
+    
     in_file := FileOpen(nome_file, 'r')
     file_batch := FileOpen(nome_file_batch, 1)
+
     SplitPath nome_file,,,,&pdf_rel
     GuiEditAppend(MainEdit, format("{1:s}`t{2:s}`r`n", "pagina", "albero"))
+    
     while not in_file.atEOF
     {
         riga := in_file.ReadLine()
@@ -106,10 +119,19 @@ leggi_file(nome_file, nome_file_batch)
             Continue
         }
     }
-    GuiEditAppend(MainEdit, format("{1:d}`t{2:s}`r`n", da_pag, albero))
-    stampa_comando(file_batch, albero, data, da_pag, 'z', pdf_rel)
+    
+    if albero
+    {
+        GuiEditAppend(MainEdit, format("{1:d}`t{2:s}`r`n", da_pag, albero))
+        stampa_comando(file_batch, albero, data, da_pag, 'z', pdf_rel)
+    } else {
+        GuiEditAppend(MainEdit, format("`r`nNON È STATA TROVATA NESSUNA SCHEDA DI RILIEVO`r`nIl file {1:s}`r`nnon sembra essere un documento VSA`r`n", pdf_rel))
+        esito := 1
+    }
+    
     in_file.Close()
     file_batch.Close()
+    return esito
 }
 
 stampa_comando(hout, albero, sdata, da_pag, a_pag, file_pdf)
