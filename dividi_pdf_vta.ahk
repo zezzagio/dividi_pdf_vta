@@ -102,7 +102,7 @@ leggi_file(nome_file, nome_file_batch)
             pag++
             Continue
         }
-        if RegExMatch(riga, '(?i)^\s*nr\. albero (\d+)', &result)
+        if RegExMatch(riga, '(?i)^\s*nr\. albero\s+(\S+)', &result)
         {
             if albero
             {
